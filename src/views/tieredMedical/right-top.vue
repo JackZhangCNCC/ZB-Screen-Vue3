@@ -58,6 +58,16 @@ const getData = () => {
             sum,
           };
         });
+
+        // 如果 yData 的长度小于3，就添加缺失的元素
+        while (yData.length < 3) {
+          yData.push({
+            name: "其他",
+            value: 0,
+            sum: 0,
+          });
+        }
+
         yData = yData.sort((a: { value: number }, b: { value: number }) => {
           return b.value - a.value;
         });
@@ -271,7 +281,7 @@ const setOption = async (data: any[]) => {
         barGap: 4,
         yAxisIndex: 1,
         barWidth: 10,
-        data: data.map(() => topThree.value[2].value), // 使用第三名的值作为后面图表展示的背景条的最高值
+        data: data.map(() => topThree.value[2] ? topThree.value[2].value : 0), // 使用第三名的值作为后面图表展示的背景条的最高值
         itemStyle: {
           normal: {
             barBorderRadius: [0, 20, 20, 0],

@@ -13,7 +13,8 @@ const UtilVar: UtilVarType = {
 };
 const runtimeType: any = {
   production: () => {
-    UtilVar.baseUrl= `https://bi.hnxygt.cn/esb/listener`
+    UtilVar.baseUrl= `https://jcpt.hnxygt.cn/esb/listener`
+    // UtilVar.baseUrl= `https://bi.hnxygt.cn/esb/listener`
   },
   //开发环境
   development: () => {
