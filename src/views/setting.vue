@@ -59,7 +59,7 @@ const indexRadioChange = (flag: boolean) => {
   });
 };
 const goToPath = async (url: any) => {
-  window.location.href = window.location.origin + "/" + url
+  window.location.href = window.location.origin + "/#/" + url
 };
 </script>
 
