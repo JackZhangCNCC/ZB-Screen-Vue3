@@ -26,7 +26,7 @@ const options = [
   },
   {
     value: "nationalHealth",
-    label: "某某市全民健康数据中心",
+    label: "桦南县全民健康数据中心",
   },
 ];
 
@@ -59,7 +59,7 @@ const indexRadioChange = (flag: boolean) => {
   });
 };
 const goToPath = async (url: any) => {
-  window.location.href = window.location.origin + "/#/" + url
+  router.push('/' + url);
 };
 </script>
 

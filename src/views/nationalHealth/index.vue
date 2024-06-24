@@ -12,7 +12,7 @@ import RightTop from "./right-top.vue";
 import RightBottom from "./right-bottom.vue";
 
 onMounted(() => {
-  headerTitle.name = "某某市全民健康数据中心"
+  headerTitle.name = "桦南县全民健康数据中心"
   hospitalName.name = "";
 });
 </script>

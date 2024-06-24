@@ -27,7 +27,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
     })
     ],
     publicDir: "public",
-    base: "./",
+    base: './report-bs/',
     server: {
       host: '0.0.0.0',
       port: 8112,

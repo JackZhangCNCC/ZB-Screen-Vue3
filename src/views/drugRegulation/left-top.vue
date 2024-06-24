@@ -4,8 +4,8 @@ import * as echarts from "echarts";
 import "echarts-gl";
 import { jclcypgk } from "@/api";
 import { ElMessage } from "element-plus";
-import { dateState } from '@/enums/dateState';
-import { hospitalName } from '@/enums/hospitalName';
+import { dateState } from "@/enums/dateState";
+import { hospitalName } from "@/enums/hospitalName";
 
 const eCharts = ref(null);
 let myChart = null;
@@ -13,16 +13,15 @@ let myChart = null;
 let boxHeight: number;
 let optionData = ref([]);
 const colorMap: { [key: string]: string } = {
-  "成药": "#FFB220",
-  "西药": "#00B1E7",
-  "草药": "#1EBD36",
+  成药: "#FFB220",
+  西药: "#00B1E7",
+  草药: "#1EBD36",
   // 添加更多类型和颜色
 };
 
 const getColor = (type: string) => {
   return colorMap[type] || "#ffffff"; // 如果类型未在 colorMap 中定义，返回默认颜色（这里是白色）
 };
-
 
 const getParametricEquation = (
   startRatio: number,
@@ -47,7 +46,7 @@ const getParametricEquation = (
   let offsetX = isSelected ? Math.cos(midRadian) * 0.1 : 0;
   let offsetY = isSelected ? Math.sin(midRadian) * 0.1 : 0;
   // 计算高亮效果的放大比例（未高亮，则比例为 1）
-  let hoverRate = isHovered ? 1.05 : 1;
+  let hoverRate = isHovered ? 1.05 : 0.9;
   // 返回曲面参数方程
   return {
     u: {
@@ -168,7 +167,8 @@ const getHeight3D = (series: any[], height: number) => {
       return b.pieData.value - a.pieData.value;
     }
   );
-  return (height * 25) / (series[0].pieData.value || 1);
+  let calculatedHeight = (height * 25) / (series[0].pieData.value || 1);
+  return Math.min(calculatedHeight, series[0].pieData.value || 1);
 };
 
 const initCharts = async () => {
@@ -179,12 +179,12 @@ const initCharts = async () => {
     type: "pie",
     label: {
       opacity: 1,
-      fontSize: 11,
+      fontSize: 10,
       lineHeight: 0,
     },
     labelLine: {
-      length: 10,
-      length2: 35,
+      length: 8,
+      length2: 26,
     },
     startAngle: 0, //起始角度，支持范围[0, 360]。
     clockwise: false, //饼图的扇区是否是顺时针排布。上述这两项配置主要是为了对齐3d的样式
@@ -199,18 +199,23 @@ const initCharts = async () => {
     item.label = {
       //   color: item.itemStyle.color,
       show: true,
-      formatter: "{b}/{d}",
-      fontSize: 10,
+      formatter: "{b}/{d}%",
+      fontSize: 8.3,
       color: "#ffffff",
       rich: {
         b: {
-          fontSize: 11,
+          fontSize: 10,
           lineHeight: 0,
         },
       },
     };
   });
   let option = {
+    tooltip: {
+      show: true,
+      trigger: "axis",
+      formatter: "{b}:{d}",
+    },
     legend: {
       data: [
         {
@@ -296,26 +301,40 @@ const initCharts = async () => {
   myChart?.setOption(option);
 };
 
-
 const getData = () => {
   const params = {
     orgname: hospitalName.name,
     stime: dateState.stime,
-    etime: dateState.etime
+    etime: dateState.etime,
   };
   jclcypgk(params)
     .then((res) => {
       console.log("左上--基层临床药品概况 ", res);
       if (res.code === "10000") {
-        optionData.value = res.result.map((item: { 类型: string; 数量: any; }) => {
+        // 创建一个包含所有类型的对象
+        let allTypes = {
+          西药: 0,
+          成药: 0,
+          草药: 0,
+          // 添加更多类型...
+        };
+        // 更新对象中的值
+        res.result.forEach((item: { 类型: string; 数量: any }) => {
+          if (item.类型 in allTypes) {
+            allTypes[item.类型] = item.数量;
+          }
+        });
+        // 将对象转换为正确格式
+        optionData.value = Object.entries(allTypes).map(([类型, 数量]) => {
           return {
-            name: item.类型,
-            value: item.数量,
+            name: 类型,
+            value: 数量,
             itemStyle: {
-              color: getColor(item.类型)
+              color: getColor(类型),
             },
           };
         });
+
         initCharts();
       } else {
         ElMessage({
