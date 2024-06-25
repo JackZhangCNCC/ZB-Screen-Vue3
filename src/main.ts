@@ -30,10 +30,10 @@ const setBaseUrl = () => {
   const hostname = window.location.hostname;
   if (isIP(hostname)) {
     // 如果 hostname 是 IP 地址，设置为内网环境的 URL
-    UtilVar.baseUrl = "https://jcpt.hnxygt.cn/esb/listener";
+    UtilVar.baseUrl = "http://100.100.8.204/esb/listener";
   } else {
     // 如果 hostname 是域名，设置为外网环境的 URL
-    UtilVar.baseUrl = "http://100.100.8.204/esb/listener";
+    UtilVar.baseUrl = "https://jcpt.hnxygt.cn/esb/listener";
   }
 };
 
