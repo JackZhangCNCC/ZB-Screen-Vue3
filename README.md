@@ -24,22 +24,6 @@
 
 [https://github.com/JackZhangCNCC/ZB-Screen-Vue3](https://github.com/JackZhangCNCC/ZB-Screen-Vue3)
 
-**Gitee地址**
-
-[https://gitee.com/JackZhangCNCC/ZB-Screen-Vue3](https://gitee.com/JackZhangCNCC/ZB-Screen-Vue3)
-
-#### vue2版本地址
-
-**github地址**
-
-[https://github.com/JackZhangCNCC/ZB-Screen](https://github.com/JackZhangCNCC/ZB-Screen)
-
-**Gitee地址**
-
-[https://gitee.com/JackZhangCNCC/ZB-Screen](https://gitee.com/JackZhangCNCC/ZB-Screen)
-
-
-
 ### 采用自适应组件方式，
 
 ###  滚动设置，自适应设置 
